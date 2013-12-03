@@ -56,7 +56,7 @@ def _strip_comment_tags(comments, tags):
             if line.startswith(tag):
                 return line[len(tag):].strip()
         return line
-    comments[:] = map(_strip, comments)
+    comments[:] = list(map(_strip, comments))
 
 
 def extract_from_dir(dirname=None, method_map=DEFAULT_MAPPING,
@@ -149,7 +149,7 @@ def extract_from_dir(dirname=None, method_map=DEFAULT_MAPPING,
                 if pathmatch(pattern, filename):
                     filepath = os.path.join(absname, filename)
                     options = {}
-                    for opattern, odict in options_map.items():
+                    for opattern, odict in list(options_map.items()):
                         if pathmatch(opattern, filename):
                             options = odict
                     if callback:
@@ -261,7 +261,7 @@ def extract(method, fileobj, keywords=DEFAULT_KEYWORDS, comment_tags=(),
     if func is None:
         raise ValueError('Unknown extraction method %r' % method)
 
-    results = func(fileobj, keywords.keys(), comment_tags,
+    results = func(fileobj, list(keywords.keys()), comment_tags,
                    options=options or {})
 
     for lineno, funcname, messages, comments in results:

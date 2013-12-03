@@ -5,12 +5,12 @@ import sys
 import shutil
 import hashlib
 import zipfile
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import subprocess
 try:
     from urllib.request import urlretrieve
 except ImportError:
-    from urllib import urlretrieve
+    from urllib.request import urlretrieve
 
 
 URL = 'http://unicode.org/Public/cldr/23.1/core.zip'
@@ -81,7 +81,7 @@ def main():
             os.remove(zip_path)
         urlretrieve(URL, zip_path, reporthook)
         changed = True
-        print
+        print()
     common_path = os.path.join(cldr_path, 'common')
 
     if changed or not os.path.isdir(common_path):

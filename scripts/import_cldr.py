@@ -41,7 +41,7 @@ def _text(elem):
     for child in elem:
         buf.append(_text(child))
     buf.append(elem.tail or '')
-    return u''.join(filter(None, buf)).strip()
+    return ''.join([_f for _f in buf if _f]).strip()
 
 
 NAME_RE = re.compile(r"^\w+$")
@@ -101,7 +101,7 @@ def _parse_currency_date(s):
     if not s:
         return None
     parts = s.split('-', 2)
-    return date(*map(int, parts + [1] * (3 - len(parts))))
+    return date(*list(map(int, parts + [1] * (3 - len(parts)))))
 
 
 def _currency_sort_key(tup):
@@ -282,10 +282,10 @@ def main():
             filename, language, territory)
 
         # plural rules
-        locale_id = '_'.join(filter(None, [
+        locale_id = '_'.join([_f for _f in [
             language,
             territory != '001' and territory or None
-        ]))
+        ] if _f])
         if locale_id in plural_rules:
             data['plural_form'] = plural_rules[locale_id]
 

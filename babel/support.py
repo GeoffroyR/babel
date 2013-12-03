@@ -188,7 +188,7 @@ class LazyProxy(object):
     def __contains__(self, key):
         return key in self.value
 
-    def __nonzero__(self):
+    def __bool__(self):
         return bool(self.value)
 
     def __dir__(self):
@@ -204,7 +204,7 @@ class LazyProxy(object):
         return str(self.value)
 
     def __unicode__(self):
-        return unicode(self.value)
+        return str(self.value)
 
     def __add__(self, other):
         return self.value + other
@@ -281,7 +281,7 @@ class NullTranslations(gettext.NullTranslations, object):
         self._catalog = {}
         self.plural = lambda n: int(n != 1)
         super(NullTranslations, self).__init__(fp=fp)
-        self.files = filter(None, [getattr(fp, 'name', None)])
+        self.files = [_f for _f in [getattr(fp, 'name', None)] if _f]
         self.domain = self.DEFAULT_DOMAIN
         self._domains = {}
 

@@ -366,9 +366,9 @@ class Locale(object):
                 details.append(locale.territories.get(self.territory))
             if self.variant:
                 details.append(locale.variants.get(self.variant))
-            details = filter(None, details)
+            details = [_f for _f in details if _f]
             if details:
-                retval += ' (%s)' % u', '.join(details)
+                retval += ' (%s)' % ', '.join(details)
         return retval
 
     display_name = property(get_display_name, doc="""\
@@ -768,7 +768,7 @@ def default_locale(category=None, aliases=LOCALE_ALIASES):
     :param aliases: a dictionary of aliases for locale identifiers
     """
     varnames = (category, 'LANGUAGE', 'LC_ALL', 'LC_CTYPE', 'LANG')
-    for name in filter(None, varnames):
+    for name in [_f for _f in varnames if _f]:
         locale = os.getenv(name)
         if locale:
             if name == 'LANGUAGE' and ':' in locale:
@@ -938,4 +938,4 @@ def get_locale_identifier(tup, sep='_'):
     """
     tup = tuple(tup[:4])
     lang, territory, script, variant = tup + (None,) * (4 - len(tup))
-    return sep.join(filter(None, (lang, script, territory, variant)))
+    return sep.join([_f for _f in (lang, script, territory, variant) if _f])

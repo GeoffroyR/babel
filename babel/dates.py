@@ -16,7 +16,7 @@
     :license: BSD, see LICENSE for more details.
 """
 
-from __future__ import division
+
 
 import re
 import pytz as _pytz
@@ -312,7 +312,7 @@ def get_timezone_gmt(datetime=None, width='long', locale=LC_TIME):
     seconds = offset.days * 24 * 60 * 60 + offset.seconds
     hours, seconds = divmod(seconds, 3600)
     if width == 'short':
-        pattern = u'%+03d%02d'
+        pattern = '%+03d%02d'
     else:
         pattern = locale.zone_formats['gmt'] % '%+03d:%02d'
     return pattern % (hours, seconds // 60)
@@ -785,10 +785,10 @@ def format_timedelta(delta, granularity='second', threshold=.85,
                     break
             # This really should not happen
             if pattern is None:
-                return u''
+                return ''
             return pattern.replace('{0}', str(value))
 
-    return u''
+    return ''
 
 
 def parse_date(string, locale=LC_TIME):
@@ -1178,4 +1178,4 @@ def parse_pattern(pattern):
     elif charbuf:
         append_chars()
 
-    return DateTimePattern(pattern, u''.join(result).replace('\0', "'"))
+    return DateTimePattern(pattern, ''.join(result).replace('\0', "'"))

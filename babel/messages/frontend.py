@@ -10,7 +10,7 @@
 """
 
 try:
-    from ConfigParser import RawConfigParser
+    from configparser import RawConfigParser
 except ImportError:
     from configparser import RawConfigParser
 from datetime import datetime
@@ -268,9 +268,9 @@ class extract_messages(Command):
         if self.input_dirs:
             self.input_dirs = re.split(',\s*', self.input_dirs)
         else:
-            self.input_dirs = dict.fromkeys([k.split('.',1)[0]
+            self.input_dirs = list(dict.fromkeys([k.split('.',1)[0]
                 for k in self.distribution.packages
-            ]).keys()
+            ]).keys())
 
         if self.add_comments:
             self._add_comments = self.add_comments.split(',')
@@ -285,7 +285,7 @@ class extract_messages(Command):
                               copyright_holder=self.copyright_holder,
                               charset=self.charset)
 
-            for dirname, (method_map, options_map) in mappings.items():
+            for dirname, (method_map, options_map) in list(mappings.items()):
                 def callback(filename, method, options):
                     if method == 'ignore':
                         return
@@ -293,7 +293,7 @@ class extract_messages(Command):
                     optstr = ''
                     if options:
                         optstr = ' (%s)' % ', '.join(['%s="%s"' % (k, v) for
-                                                      k, v in options.items()])
+                                                      k, v in list(options.items())])
                     log.info('extracting messages from %s%s', filepath, optstr)
 
                 extracted = extract_from_dir(dirname, method_map, options_map,
@@ -330,7 +330,7 @@ class extract_messages(Command):
 
         elif getattr(self.distribution, 'message_extractors', None):
             message_extractors = self.distribution.message_extractors
-            for dirname, mapping in message_extractors.items():
+            for dirname, mapping in list(message_extractors.items()):
                 if isinstance(mapping, string_types):
                     method_map, options_map = parse_mapping(BytesIO(mapping))
                 else:
@@ -645,13 +645,13 @@ class CommandLineInterface(object):
             identifiers = localedata.locale_identifiers()
             longest = max([len(identifier) for identifier in identifiers])
             identifiers.sort()
-            format = u'%%-%ds %%s' % (longest + 1)
+            format = '%%-%ds %%s' % (longest + 1)
             for identifier in identifiers:
                 locale = Locale.parse(identifier)
                 output = format % (identifier, locale.english_name)
-                print(output.encode(sys.stdout.encoding or
+                print((output.encode(sys.stdout.encoding or
                                     getpreferredencoding() or
-                                    'ascii', 'replace'))
+                                    'ascii', 'replace')))
             return 0
 
         if not args:
@@ -680,13 +680,13 @@ class CommandLineInterface(object):
         handler.setFormatter(formatter)
 
     def _help(self):
-        print(self.parser.format_help())
+        print((self.parser.format_help()))
         print("commands:")
         longest = max([len(command) for command in self.commands])
         format = "  %%-%ds %%s" % max(8, longest + 1)
         commands = sorted(self.commands.items())
         for name, description in commands:
-            print(format % (name, description))
+            print((format % (name, description)))
 
     def compile(self, argv):
         """Subcommand for compiling a message catalog to a MO file.
@@ -907,7 +907,7 @@ class CommandLineInterface(object):
                 optstr = ''
                 if options:
                     optstr = ' (%s)' % ', '.join(['%s="%s"' % (k, v) for
-                                                  k, v in options.items()])
+                                                  k, v in list(options.items())])
                 self.log.info('extracting messages from %s%s', filepath,
                               optstr)
 

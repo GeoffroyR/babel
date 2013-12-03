@@ -46,7 +46,7 @@ class PluralRule(object):
         :raise RuleError: if the expression is malformed
         """
         if isinstance(rules, dict):
-            rules = rules.items()
+            rules = list(rules.items())
         found = set()
         self.abstract = []
         for key, expr in sorted(list(rules)):
@@ -442,7 +442,7 @@ class _GettextCompiler(_Compiler):
                     self.compile(item[0])
                 ))
             else:
-                min, max = map(self.compile, item)
+                min, max = list(map(self.compile, item))
                 rv.append('(%s >= %s && %s <= %s)' % (
                     expr,
                     min,

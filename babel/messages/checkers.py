@@ -54,7 +54,7 @@ def python_format(catalog, message):
     if not isinstance(msgstrs, (list, tuple)):
         msgstrs = (msgstrs,)
 
-    for msgid, msgstr in izip(msgids, msgstrs):
+    for msgid, msgstr in zip(msgids, msgstrs):
         if msgstr:
             _validate_format(msgid, msgstr)
 
@@ -119,10 +119,10 @@ def _validate_format(format, alternative):
                                            'and named placeholders')
         return bool(positional)
 
-    a, b = map(_parse, (format, alternative))
+    a, b = list(map(_parse, (format, alternative)))
 
     # now check if both strings are positional or named
-    a_positional, b_positional = map(_check_positional, (a, b))
+    a_positional, b_positional = list(map(_check_positional, (a, b)))
     if a_positional and not b_positional and not b:
         raise TranslationError('placeholders are incompatible')
     elif a_positional != b_positional:
@@ -134,7 +134,7 @@ def _validate_format(format, alternative):
         if len(a) != len(b):
             raise TranslationError('positional format placeholders are '
                                    'unbalanced')
-        for idx, ((_, first), (_, second)) in enumerate(izip(a, b)):
+        for idx, ((_, first), (_, second)) in enumerate(zip(a, b)):
             if not _compatible(first, second):
                 raise TranslationError('incompatible format for placeholder '
                                        '%d: %r and %r are not compatible' %

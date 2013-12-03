@@ -33,7 +33,7 @@ class FormatDecimalTestCase(unittest.TestCase):
         # regression test for #183, fraction digits were not correctly cutted
         # if the input was a float value and the value had more than 7
         # significant digits
-        self.assertEqual(u'12,345,678.05',
+        self.assertEqual('12,345,678.05',
                          numbers.format_decimal(12345678.051, '#,##0.00',
                          locale='en_US'))
 
@@ -175,11 +175,11 @@ class NumberParsingTestCase(unittest.TestCase):
 
 
 def test_get_currency_name():
-    assert numbers.get_currency_name('USD', 'en_US') == u'US dollars'
+    assert numbers.get_currency_name('USD', 'en_US') == 'US dollars'
 
 
 def test_get_currency_symbol():
-    assert numbers.get_currency_symbol('USD', 'en_US') == u'$'
+    assert numbers.get_currency_symbol('USD', 'en_US') == '$'
 
 
 def test_get_territory_currencies():
@@ -204,68 +204,68 @@ def test_get_territory_currencies():
 
 
 def test_get_decimal_symbol():
-    assert numbers.get_decimal_symbol('en_US') == u'.'
+    assert numbers.get_decimal_symbol('en_US') == '.'
 
 
 def test_get_plus_sign_symbol():
-    assert numbers.get_plus_sign_symbol('en_US') == u'+'
+    assert numbers.get_plus_sign_symbol('en_US') == '+'
 
 
 def test_get_minus_sign_symbol():
-    assert numbers.get_minus_sign_symbol('en_US') == u'-'
+    assert numbers.get_minus_sign_symbol('en_US') == '-'
 
 
 def test_get_exponential_symbol():
-    assert numbers.get_exponential_symbol('en_US') == u'E'
+    assert numbers.get_exponential_symbol('en_US') == 'E'
 
 
 def test_get_group_symbol():
-    assert numbers.get_group_symbol('en_US') == u','
+    assert numbers.get_group_symbol('en_US') == ','
 
 
 def test_format_number():
-    assert numbers.format_number(1099, locale='en_US') == u'1,099'
-    assert numbers.format_number(1099, locale='de_DE') == u'1.099'
+    assert numbers.format_number(1099, locale='en_US') == '1,099'
+    assert numbers.format_number(1099, locale='de_DE') == '1.099'
 
 
 def test_format_decimal():
-    assert numbers.format_decimal(1.2345, locale='en_US') == u'1.234'
-    assert numbers.format_decimal(1.2346, locale='en_US') == u'1.235'
-    assert numbers.format_decimal(-1.2346, locale='en_US') == u'-1.235'
-    assert numbers.format_decimal(1.2345, locale='sv_SE') == u'1,234'
-    assert numbers.format_decimal(1.2345, locale='de') == u'1,234'
-    assert numbers.format_decimal(12345.5, locale='en_US') == u'12,345.5'
+    assert numbers.format_decimal(1.2345, locale='en_US') == '1.234'
+    assert numbers.format_decimal(1.2346, locale='en_US') == '1.235'
+    assert numbers.format_decimal(-1.2346, locale='en_US') == '-1.235'
+    assert numbers.format_decimal(1.2345, locale='sv_SE') == '1,234'
+    assert numbers.format_decimal(1.2345, locale='de') == '1,234'
+    assert numbers.format_decimal(12345.5, locale='en_US') == '12,345.5'
 
 
 def test_format_currency():
     assert (numbers.format_currency(1099.98, 'USD', locale='en_US')
-            == u'$1,099.98')
+            == '$1,099.98')
     assert (numbers.format_currency(1099.98, 'USD', locale='es_CO')
-            == u'1.099,98\xa0US$')
+            == '1.099,98\xa0US$')
     assert (numbers.format_currency(1099.98, 'EUR', locale='de_DE')
-            == u'1.099,98\xa0\u20ac')
-    assert (numbers.format_currency(1099.98, 'EUR', u'\xa4\xa4 #,##0.00',
+            == '1.099,98\xa0\u20ac')
+    assert (numbers.format_currency(1099.98, 'EUR', '\xa4\xa4 #,##0.00',
                                     locale='en_US')
-            == u'EUR 1,099.98')
+            == 'EUR 1,099.98')
 
 
 def test_format_percent():
-    assert numbers.format_percent(0.34, locale='en_US') == u'34%'
-    assert numbers.format_percent(25.1234, locale='en_US') == u'2,512%'
+    assert numbers.format_percent(0.34, locale='en_US') == '34%'
+    assert numbers.format_percent(25.1234, locale='en_US') == '2,512%'
     assert (numbers.format_percent(25.1234, locale='sv_SE')
-            == u'2\xa0512\xa0%')
-    assert (numbers.format_percent(25.1234, u'#,##0\u2030', locale='en_US')
-            == u'25,123\u2030')
+            == '2\xa0512\xa0%')
+    assert (numbers.format_percent(25.1234, '#,##0\u2030', locale='en_US')
+            == '25,123\u2030')
 
 
 def test_scientific_exponent_displayed_as_integer():
-    assert numbers.format_scientific(100000, locale='en_US') == u'1E5'
+    assert numbers.format_scientific(100000, locale='en_US') == '1E5'
 
 
 def test_format_scientific():
-    assert numbers.format_scientific(10000, locale='en_US') == u'1E4'
-    assert (numbers.format_scientific(1234567, u'##0E00', locale='en_US')
-            == u'1.23E06')
+    assert numbers.format_scientific(10000, locale='en_US') == '1E4'
+    assert (numbers.format_scientific(1234567, '##0E00', locale='en_US')
+            == '1.23E06')
 
 
 def test_parse_number():

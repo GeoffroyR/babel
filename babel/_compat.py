@@ -9,13 +9,13 @@ if not PY2:
     text_type = str
     string_types = (str,)
     integer_types = (int, )
-    unichr = chr
+    chr = chr
 
     text_to_native = lambda s, enc: s
 
-    iterkeys = lambda d: iter(d.keys())
-    itervalues = lambda d: iter(d.values())
-    iteritems = lambda d: iter(d.items())
+    iterkeys = lambda d: iter(list(d.keys()))
+    itervalues = lambda d: iter(list(d.values()))
+    iteritems = lambda d: iter(list(d.items()))
 
     from io import StringIO, BytesIO
     import pickle
@@ -27,22 +27,22 @@ if not PY2:
     cmp = lambda a, b: (a > b) - (a < b)
 
 else:
-    text_type = unicode
-    string_types = (str, unicode)
-    integer_types = (int, long)
+    text_type = str
+    string_types = (str, str)
+    integer_types = (int, int)
 
     text_to_native = lambda s, enc: s.encode(enc)
-    unichr = unichr
+    chr = chr
 
-    iterkeys = lambda d: d.iterkeys()
-    itervalues = lambda d: d.itervalues()
-    iteritems = lambda d: d.iteritems()
+    iterkeys = lambda d: iter(d.keys())
+    itervalues = lambda d: iter(d.values())
+    iteritems = lambda d: iter(d.items())
 
-    from cStringIO import StringIO as BytesIO
-    from StringIO import StringIO
-    import cPickle as pickle
+    from io import StringIO as BytesIO
+    from io import StringIO
+    import pickle as pickle
 
-    from itertools import izip, imap
+    
     range_type = xrange
 
     cmp = cmp

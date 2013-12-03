@@ -100,7 +100,7 @@ def read_mo(fileobj):
         origidx += 8
         transidx += 8
 
-    catalog.mime_headers = headers.items()
+    catalog.mime_headers = list(headers.items())
     return catalog
 
 
